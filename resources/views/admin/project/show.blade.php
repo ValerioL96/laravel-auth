@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('main-content')
+@section('content')
 <section class="container">
     <div class="row justify-content-center">
         <article class="col-3 my-4">
@@ -18,7 +18,7 @@
                         Click here for the repository
                     </a>
                 </div>
-                <div class="card-footer card-link d-flex justify-content-center">
+                <div class="card-footer card-link d-flex justify-content-around">
 
                     <a href="{{route('admin.project.index', $project) }}" class="btn btn-primary d-flex justify-content-center">Back to do project list</a>
                     <a href="" class="btn btn-warning d-flex justify-content-center">Edit</a>

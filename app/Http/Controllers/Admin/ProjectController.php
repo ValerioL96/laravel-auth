@@ -31,13 +31,27 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->except('_token');
+        $data = $request->validate([
+            "name"=>['required', 'min:2', 'max:255'],
+            "language_used"=>['required', 'min:1', 'max:255'],
+            "url_repo"=>['url', 'nullable']
+        ],[
+            "name"=>'You must enter a valid name!',
+            "language_used"=>'You must enter a valid language between 1 and 250 characters!',
+            "url_repo"=>'You must enter a valid URL!'
+        ]);
+
+        $newProject = new Project($data);
+        $newProject->save();
+
+        return redirect()->route('admin.project.show', $newProject)->with('new_project_message', $newProject->name . " It was created successfully!!");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Project $project)
     {
         return view('admin.project.show', compact('project'));
     }
