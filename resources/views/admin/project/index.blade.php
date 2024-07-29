@@ -27,8 +27,8 @@
                             <a href=" {{ $project->url_repo}}">Click here for the repository</a></td>
                         <td>
 
-                            <a href="{{ route('admin.project.show', ['project' => $project->id]) }}" class="btn btn-info btn-sm">Show</a>
-                            <a href="{{ route('admin.project.edit', ['project' => $project->id]) }}" class="btn btn-warning btn-sm">edit</a>
+                            <a href="{{ route('admin.project.show', $project )}}" class="btn btn-info btn-sm">Show</a>
+                            <a href="" class="btn btn-warning btn-sm">edit</a>
                         </td>
                     </tr>
                     @endforeach
