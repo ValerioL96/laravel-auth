@@ -10,4 +10,10 @@ class Project extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    protected $fillable = [
+        'name',
+        'language_used',
+        'url_repo',
+    ];
 }

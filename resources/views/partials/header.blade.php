@@ -17,8 +17,11 @@
                 </li>
                 <li>
                     <a class="nav-link" href="{{route('admin.project.index')}}"  aria-current="page">
-                        Lista progetti
+                        Project List
                     </a>
+                </li>
+                <li>
+                    <a class="nav-link" aria-current="page" href="{{ route('admin.project.create')}}">Create new project</a>
                 </li>
             </ul>
 
