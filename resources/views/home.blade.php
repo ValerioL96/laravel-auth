@@ -15,6 +15,11 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+                    <div class="row">
+                        <div class="col-12">
+                            Benvenuto!!
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
