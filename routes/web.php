@@ -20,7 +20,10 @@ Route::get('/', [GuestHomeController::class, 'index'])->name('home');
 Route::get('/home', [GuestHomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->name('admin.')->prefix('admin/')->group(
-    function(){
+ function(){
+    Route::get('project/delete', [AdminProjectController::class, 'deletedIndex'])->name('project.deleteindex');
+    Route::patch('project/{project}/restore', [AdminProjectController::class, 'restore'])->name('project.restore');
+    Route::delete('project/{project}/delete', [AdminProjectController::class, 'delete'])->name('project.permanent_delete');
         Route::resource('/project', AdminProjectController::class);
     }
 );

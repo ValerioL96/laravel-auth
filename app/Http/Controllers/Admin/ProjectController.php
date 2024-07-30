@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use Illuminate\Http\Request;
 
@@ -13,7 +15,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        $projects = Project::paginate(10);
 
         return view('admin.project.index', compact('projects'));
     }
@@ -29,19 +31,10 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
         $data = $request->except('_token');
-        $data = $request->validate([
-            "name"=>['required', 'min:2', 'max:255'],
-            "language_used"=>['required', 'min:1', 'max:255'],
-            "url_repo"=>['url', 'nullable']
-        ],[
-            "name"=>'You must enter a valid name!',
-            "language_used"=>'You must enter a valid language between 1 and 250 characters!',
-            "url_repo"=>'You must enter a valid URL!'
-        ]);
-
+        $data = $request->validated();
         $newProject = new Project($data);
         $newProject->save();
 
@@ -59,24 +52,58 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Project $project)
     {
-        //
+        return view('admin.project.edit', compact('project'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
+        $data = $request->except('_token');
+        $data = $request->validated();
+        $project->update($data);
+
+        return redirect()->route('admin.project.show', $project)->with('update_project_message', $project->name . " It has been successfully updated!!");
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Project $project)
     {
-        //
+        $project->delete();
+
+        return redirect()->route('admin.project.index')->with('message_delete', $project->name . " it has been successfully deleted!!");
+    }
+
+    /**
+     * Trash
+     */
+
+    public function deletedIndex()
+    {
+        $project = Project::onlyTrashed()->get();
+
+        return view('admin.project.delete', compact('project'));
+    }
+
+    /* restore items from the recycle bin */
+    public function restore(Project $project)
+    {
+        $project = Project::onlyTrashed()->findOrFail($project);
+        $project->restore();
+
+        return redirect()->route('admin.project.index')->with('message_restore', $project->name . " it has been successfully restored!!");
+    }
+
+    /* Empty the trash */
+    public function delete(Project $project)
+    {
+        $project = Project::onlyTrashed()->findOrFail($project);
+        $project->forceDelete();
+        return redirect()->route('admin.project.deleteindex')->with('message_delete', $project->name . " The trash has been emptied!!");
     }
 }

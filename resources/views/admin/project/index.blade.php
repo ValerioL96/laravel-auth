@@ -28,16 +28,29 @@
                         <td>
 
                             <a href="{{ route('admin.project.show', $project )}}" class="btn btn-info btn-sm">Show</a>
-                            <a href="" class="btn btn-warning btn-sm">edit</a>
+                            <a href="{{ route('admin.project.edit', $project )}}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('admin.project.destroy', $project) }}" method="POST" class="d-inline-block delete-form mx-2" data_project_id="{{ $project->id }}" data_project_name="{{ $project->name }}">
+                                @method('DELETE')
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
                         </td>
                     </tr>
                     @endforeach
 
                     </tbody>
                 </table>
+                <div class="pagination">
+                    {{ $projects->links(); }}
+                </div>
+
         </div>
 
     </div>
 </div>
 
+@endsection
+
+@section('custom_script')
+@vite('resources/js/project/delete-confirmation.js')
 @endsection

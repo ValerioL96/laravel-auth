@@ -18,13 +18,21 @@
                         Click here for the repository
                     </a>
                 </div>
-                <div class="card-footer card-link d-flex justify-content-around">
-
-                    <a href="{{route('admin.project.index', $project) }}" class="btn btn-primary d-flex justify-content-center">Back to do project list</a>
-                    <a href="" class="btn btn-warning d-flex justify-content-center">Edit</a>
+                <div class="card-footer card-link d-flex justify-content-center ">
+                    <a href="{{route('admin.project.index', $project) }}" class="btn btn-primary btn-sm d-flex justify-content-center mx-2">Back to do project list</a>
+                    <a href="{{ route('admin.project.edit', $project )}}" class="btn btn-warning btn-sm d-flex justify-content-center mx-2">Edit</a>
                 </div>
+                <form  action="{{ route('admin.project.destroy', $project) }}" method="POST" class="d-inline-block delete-form my-2 col-12 d-flex justify-content-center" data_project_id="{{ $project->id }}" data_project_name="{{ $project->name }}">
+                    @method('DELETE')
+                    @csrf
+                    <button type="submit" class="btn btn-danger btn-sm col-5">Delete</button>
+                </form>
             </div>
         </article>
     </div>
 </section>
+@endsection
+
+@section('custom_script')
+@vite('resources/js/project/delete-confirmation.js')
 @endsection
