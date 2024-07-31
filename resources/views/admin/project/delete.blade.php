@@ -34,7 +34,7 @@
                         @csrf
                         <button type="submit" class="btn btn-success">Restore</button>
                     </form>
-                    <form action="{{ route('admin.project.permanent_delete',  $project) }}" method="POST" class="d-inline-block delete_form" data_project_id="{{ $project->id }}" data_project_nome="{{ $project->nome }}">
+                    <form action="{{ route('admin.project.permanent_delete',  $project) }}" method="POST" class="d-inline-block delete-form" data_project_id="{{ $project->id }}" data_project_nome="{{ $project->nome }}">
                         @method('DELETE')
                         @csrf
                         <button type="submit" class="btn btn-danger">Empty the trash</button>

@@ -24,7 +24,7 @@
                     <a class="nav-link" aria-current="page" href="{{ route('admin.project.create')}}">Create new project</a>
                 </li>
                 <li>
-                    <a class="nav-link active mx-5" href="{{ route('admin.project.deleteindex')}}"  aria-current="page">
+                    <a class="nav-link active mx-2" href="{{ route('admin.project.deleteindex')}}"  aria-current="page">
                         <i class="fa-solid fa-trash-can"></i>
                     </a>
                 </li>
