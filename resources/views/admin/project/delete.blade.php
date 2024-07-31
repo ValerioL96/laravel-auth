@@ -12,6 +12,7 @@
             {{ session('message_restore') }}
         </div>
         @endif
+        @foreach ($projects as $project)
         <article class="col-3 my-4">
             <div class="card text-bg-dark mb-3" style="max-width: 18rem;">
                 <div class="card-header">
@@ -28,12 +29,12 @@
                     </a>
                 </div>
                 <div class="card-footer card-link d-flex justify-content-center ">
-                    <form action="{{ route('admin.project.restore', $project->id) }}" method="POST" class="d-inline-block mx-2" data_project_id="{{ $project->id }}" data_project_nome="{{ $project->name }}">
+                    <form action="{{ route('admin.project.restore', $project) }}" method="POST" class="d-inline-block mx-2" data_project_id="{{ $project->id }}" data_project_nome="{{ $project->name }}">
                         @method('PATCH')
                         @csrf
                         <button type="submit" class="btn btn-success">Restore</button>
                     </form>
-                    <form action="{{ route('admin.project.permanent_delete',  $sproject) }}" method="POST" class="d-inline-block delete_form" data_project_id="{{ $project->id }}" data_project_nome="{{ $project->nome }}">
+                    <form action="{{ route('admin.project.permanent_delete',  $project) }}" method="POST" class="d-inline-block delete_form" data_project_id="{{ $project->id }}" data_project_nome="{{ $project->nome }}">
                         @method('DELETE')
                         @csrf
                         <button type="submit" class="btn btn-danger">Empty the trash</button>
@@ -41,6 +42,7 @@
                 </div>
             </div>
         </article>
+        @endforeach
     </div>
 </section>
 @endsection

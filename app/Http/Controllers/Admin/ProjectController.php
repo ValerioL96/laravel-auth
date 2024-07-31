@@ -85,25 +85,25 @@ class ProjectController extends Controller
 
     public function deletedIndex()
     {
-        $project = Project::onlyTrashed()->get();
+        $projects = Project::onlyTrashed()->get();
 
-        return view('admin.project.delete', compact('project'));
+        return view('admin.project.delete', compact('projects'));
     }
 
     /* restore items from the recycle bin */
-    public function restore(Project $project)
+    public function restore(string $id)
     {
-        $project = Project::onlyTrashed()->findOrFail($project);
-        $project->restore();
+        $projects = Project::onlyTrashed()->findOrFail($id);
+        $projects->restore();
 
-        return redirect()->route('admin.project.index')->with('message_restore', $project->name . " it has been successfully restored!!");
+        return redirect()->route('admin.project.index')->with('message_restore', $projects->name . " it has been successfully restored!!");
     }
 
     /* Empty the trash */
-    public function delete(Project $project)
+    public function delete(string $id)
     {
-        $project = Project::onlyTrashed()->findOrFail($project);
-        $project->forceDelete();
-        return redirect()->route('admin.project.deleteindex')->with('message_delete', $project->name . " The trash has been emptied!!");
+        $projects = Project::onlyTrashed()->findOrFail($id);
+        $projects->forceDelete();
+        return redirect()->route('admin.project.deleteindex')->with('message_delete', $projects->name . " The trash has been emptied!!");
     }
 }
